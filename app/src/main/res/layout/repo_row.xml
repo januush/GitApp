@@ -24,12 +24,12 @@
                   android:layout_marginTop="20dp"
                   android:textAppearance="@style/TextAppearance.AppCompat.Large"
                   android:textStyle="bold"
-                  android:id="@+id/title"/>
+                  android:id="@+id/repoName"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:text="GithubLink"
                   android:layout_toRightOf="@id/repoImage"
                   android:layout_marginLeft="20dp"
-                  android:layout_below="@id/title"
+                  android:layout_below="@id/repoName"
                   android:layout_marginTop="20dp"
                   android:textAppearance="@style/TextAppearance.AppCompat.Large"
                   android:textStyle="bold"

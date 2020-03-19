@@ -18,16 +18,16 @@ class ListViewModel: ViewModel() {
         //For now just provide some mock data to build the View. The backend part is to do.
 
         val mockData: List<Repository> = listOf(
-            Repository("Repo1"),
-            Repository("Repo2"),
-            Repository("Repo3"),
-            Repository("Repo4"),
-            Repository("Repo5"),
-            Repository("Repo6"),
-            Repository("Repo7"),
-            Repository("Repo8"),
-            Repository("Repo9"),
-            Repository("Repo10")
+            Repository("Repo1","www.repo1.com"),
+            Repository("Repo2","www.repo1.com"),
+            Repository("Repo3","www.repo1.com"),
+            Repository("Repo4","www.repo1.com"),
+            Repository("Repo5","www.repo1.com"),
+            Repository("Repo6","www.repo1.com"),
+            Repository("Repo7","www.repo1.com"),
+            Repository("Repo8","www.repo1.com"),
+            Repository("Repo9","www.repo1.com"),
+            Repository("Repo10","www.repo1.com")
         )
         reposLoadError.value = false //No error in loading data
         loading.value = false //it is not loading
