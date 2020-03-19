@@ -2,9 +2,18 @@ package com.example.gitapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.gitapp.model.ReposService
 import com.example.gitapp.model.Repository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 
 class ListViewModel: ViewModel() {
+
+    private val reposService = ReposService()
+    private val disposable = CompositeDisposable()
+
     val repos = MutableLiveData<List<Repository>>()
     val reposLoadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
@@ -14,24 +23,30 @@ class ListViewModel: ViewModel() {
     }
 
     private fun fetchRepos() {
-        //I hide the implementation of the function by calling it from the refresh()
-        //For now just provide some mock data to build the View. The backend part is to do.
+        loading.value = true
+        disposable.add(
+            reposService.getRepos()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<List<Repository>>(){
+                    override fun onSuccess(value: List<Repository>?) {
+                        repos.value = value
+                        reposLoadError.value = false
+                        loading.value = false
+                    }
 
-        val mockData: List<Repository> = listOf(
-            Repository("Repo1","www.repo1.com"),
-            Repository("Repo2","www.repo1.com"),
-            Repository("Repo3","www.repo1.com"),
-            Repository("Repo4","www.repo1.com"),
-            Repository("Repo5","www.repo1.com"),
-            Repository("Repo6","www.repo1.com"),
-            Repository("Repo7","www.repo1.com"),
-            Repository("Repo8","www.repo1.com"),
-            Repository("Repo9","www.repo1.com"),
-            Repository("Repo10","www.repo1.com")
+                    override fun onError(e: Throwable?) {
+                        reposLoadError.value = true
+                        loading.value = false
+                    }
+
+            })
         )
-        reposLoadError.value = false //No error in loading data
-        loading.value = false //it is not loading
-        repos.value = mockData //update for listeners
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear() //clears the connection with RxJava
     }
 
 }

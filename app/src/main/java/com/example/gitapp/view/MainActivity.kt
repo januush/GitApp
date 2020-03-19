@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     fun observeViewModel(){
         viewModel.repos.observe(this, Observer {
-            repositories -> repositories?.let { reposAdapter.updateRepos(it) }
+            repositories -> repositories?.let {
+            reposList.visibility = View.VISIBLE
+            reposAdapter.updateRepos(it) }
         })
 
         viewModel.reposLoadError.observe(this, Observer { isError ->
