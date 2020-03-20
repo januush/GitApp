@@ -1,52 +1,32 @@
 package com.example.gitapp.viewmodel
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.example.gitapp.data.RepoDataSourceFactory
 import com.example.gitapp.model.ReposService
 import com.example.gitapp.model.Repository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 
-class ListViewModel: ViewModel() {
+class ListViewModel : ViewModel() {
 
-    private val reposService = ReposService()
-    private val disposable = CompositeDisposable()
+    var reposList: LiveData<PagedList<Repository>>
+    private val compositeDisposable = CompositeDisposable()
+    private val sourceFactory: RepoDataSourceFactory
+    private val pageSize = 15
 
-    val repos = MutableLiveData<List<Repository>>()
-    val reposLoadError = MutableLiveData<Boolean>()
-    val loading = MutableLiveData<Boolean>()
-
-    fun refresh() {
-        fetchRepos()
-    }
-
-    private fun fetchRepos() {
-        loading.value = true
-        disposable.add(
-            reposService.getRepos()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<List<Repository>>(){
-                    override fun onSuccess(value: List<Repository>?) {
-                        repos.value = value
-                        reposLoadError.value = false
-                        loading.value = false
-                    }
-
-                    override fun onError(e: Throwable?) {
-                        reposLoadError.value = true
-                        loading.value = false
-                    }
-
-            })
-        )
+    init {
+        sourceFactory = RepoDataSourceFactory(compositeDisposable, ReposService.getService())
+        val config = PagedList.Config.Builder()
+            .setPageSize(pageSize).setInitialLoadSizeHint(pageSize*2)
+            .setEnablePlaceholders(false)
+            .build()
+        reposList = LivePagedListBuilder<Long,Repository>(sourceFactory,config).build()
     }
 
     override fun onCleared() {
         super.onCleared()
-        disposable.clear() //clears the connection with RxJava
+        compositeDisposable.dispose()
     }
-
 }
