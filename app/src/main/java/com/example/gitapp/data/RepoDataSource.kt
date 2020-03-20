@@ -1,11 +1,14 @@
 package com.example.gitapp.data
 
 import androidx.paging.ItemKeyedDataSource
+import com.example.gitapp.model.ReposService
 import com.example.gitapp.model.Repository
+import io.reactivex.disposables.CompositeDisposable
 
 class RepoDataSource(
-
-): ItemKeyedDataSource<Long, Repository>() {
+    private val reposService: ReposService,
+    private val compositeDisposable: CompositeDisposable)
+    : ItemKeyedDataSource<Long, Repository>() {
     override fun loadInitial(params: LoadInitialParams<Long>, callback: LoadInitialCallback<Repository>) {
         TODO("Not yet implemented")
     }
