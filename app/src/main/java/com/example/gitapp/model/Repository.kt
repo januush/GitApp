@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 import retrofit2.http.Body
 
 data class Repository(
+    @SerializedName("id")
+    val id: Long = 0,
     @SerializedName("full_name")
     val repoName: String?,
     @SerializedName("html_url")
