@@ -21,7 +21,7 @@ class ReposAdapter(private val retryCallback: () -> Unit) : PagedListAdapter<Rep
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (getItemViewType(position)){
+        when (getItemViewType(position)) {
             R.layout.repo_row -> (holder as RepoViewHolder).bind(getItem(position))
         }
     }
@@ -31,15 +31,35 @@ class ReposAdapter(private val retryCallback: () -> Unit) : PagedListAdapter<Rep
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(hasExtraRow() && position == itemCount - 1){
+        return if (hasExtraRow() && position == itemCount - 1) {
             R.layout.item_network_state
-        } else{
+        } else {
             R.layout.repo_row
         }
     }
 
     override fun getItemCount(): Int {
         return super.getItemCount() + if (hasExtraRow()) 1 else 0
+    }
+
+    fun setNetworkState(newNetworkState: NetworkState?) {
+        if (currentList != null) {
+            if (currentList!!.size != 0) {
+                val previousState = this.networkState
+                val hadExtraRow = hasExtraRow()
+                this.networkState = newNetworkState
+                val hasExtraRow = hasExtraRow()
+                if (hadExtraRow != hasExtraRow) {
+                    if (hadExtraRow) {
+                        notifyItemRemoved(super.getItemCount())
+                    } else {
+                        notifyItemInserted(super.getItemCount())
+                    }
+                } else if (hasExtraRow && previousState !== newNetworkState) {
+                    notifyItemChanged(itemCount - 1)
+                }
+            }
+        }
     }
 
 

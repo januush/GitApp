@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">GitApp</string>
     <string name="error_loading">Error while loading</string>
+    <string name="retry">Retry</string>
 </resources>
