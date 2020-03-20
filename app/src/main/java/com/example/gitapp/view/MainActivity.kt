@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
             adapter = reposAdapter
         }
 
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            viewModel.refresh()
+        }
+
         //Connect the View with the ListViewModel
         observeViewModel()
     }
