@@ -16,6 +16,7 @@ class ReposAdapter(private val retryCallback: () -> Unit) : PagedListAdapter<Rep
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.repo_row -> RepoViewHolder.create(parent)
+            R.layout.item_network_state -> NetworkViewHolder.create(parent,retryCallback)
             else -> throw IllegalArgumentException("unknown view type")
         }
     }
@@ -23,12 +24,10 @@ class ReposAdapter(private val retryCallback: () -> Unit) : PagedListAdapter<Rep
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             R.layout.repo_row -> (holder as RepoViewHolder).bind(getItem(position))
+            R.layout.item_network_state -> (holder as NetworkViewHolder).bind(networkState)
         }
     }
 
-    private fun hasExtraRow(): Boolean {
-        return networkState != null && networkState != NetworkState.LOADED
-    }
 
     override fun getItemViewType(position: Int): Int {
         return if (hasExtraRow() && position == itemCount - 1) {
@@ -42,35 +41,20 @@ class ReposAdapter(private val retryCallback: () -> Unit) : PagedListAdapter<Rep
         return super.getItemCount() + if (hasExtraRow()) 1 else 0
     }
 
-    fun setNetworkState(newNetworkState: NetworkState?) {
-        if (currentList != null) {
-            if (currentList!!.size != 0) {
-                val previousState = this.networkState
-                val hadExtraRow = hasExtraRow()
-                this.networkState = newNetworkState
-                val hasExtraRow = hasExtraRow()
-                if (hadExtraRow != hasExtraRow) {
-                    if (hadExtraRow) {
-                        notifyItemRemoved(super.getItemCount())
-                    } else {
-                        notifyItemInserted(super.getItemCount())
-                    }
-                } else if (hasExtraRow && previousState !== newNetworkState) {
-                    notifyItemChanged(itemCount - 1)
-                }
-            }
-        }
+
+    private fun hasExtraRow(): Boolean {
+        return networkState != null && networkState != NetworkState.LOADED
     }
 
 
     companion object{
         val RepoDiffCallback = object : DiffUtil.ItemCallback<Repository>(){
             override fun areItemsTheSame(oldItem: Repository, newItem: Repository): Boolean {
-                TODO("Not yet implemented")
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Repository, newItem: Repository): Boolean {
-                TODO("Not yet implemented")
+                return oldItem == newItem
             }
         }
     }

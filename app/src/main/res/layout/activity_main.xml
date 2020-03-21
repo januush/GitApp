@@ -26,6 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="@string/error_loading"
+                android:visibility="gone"
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +39,15 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:indeterminate="true"
+                android:visibility="gone"
                 android:max="100"
                 android:indeterminateTint="#1a09d6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/list_error"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
