@@ -7,10 +7,16 @@ import retrofit2.http.Body
 data class Repository(
     @SerializedName("id")
     val id: Long = 0,
-    @SerializedName("full_name")
+    @SerializedName("name")
     val repoName: String?,
     @SerializedName("html_url")
     val repoLink: String?,
+    @SerializedName("private")
+    val repoIsPrivate: Boolean?,
+    @SerializedName("description")
+    val repoDescription: String?,
+    @SerializedName("full_name")
+    val repoFullName: String?,
 
     @SerializedName("owner") var repoImage: RepoOwner)
 
