@@ -1,6 +1,7 @@
 package com.example.gitapp.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             adapter = reposAdapter
         }
 
-        //initSwipeToRefresh()
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
             reposViewModel.refresh()
@@ -43,7 +43,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun observeViewModel(){
-        reposViewModel.reposList.observe(this, Observer<PagedList<Repository>> {reposAdapter.submitList(it)})
+        reposViewModel.reposList.observe(this, Observer<PagedList<Repository>> {reposAdapter.submitList(it)
+            loading_progress_bar.visibility = View.GONE
+        })
 
     }
 

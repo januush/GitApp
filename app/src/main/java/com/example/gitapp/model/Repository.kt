@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import retrofit2.http.Body
 
+//TODO Call <ResponseBody> getRepositoryData
+//TODO how about reference to the RepoOwner class?
+
 data class Repository(
     @SerializedName("id")
     val id: Long = 0,
@@ -20,7 +23,7 @@ data class Repository(
 
     @SerializedName("owner") var repoImage: RepoOwner)
 
-//TODO how about reference to that class?
 class RepoOwner (
-    var avatar_url: String?
+    var avatar_url: String?,
+    var login: String?
 )

@@ -9,7 +9,7 @@ import com.example.gitapp.util.NetworkState
 import com.example.gitapp.util.Status
 import kotlinx.android.synthetic.main.item_network_state.view.*
 
-class NetworkViewHolder(val view: View, private val retryCallback: () -> Unit) : RecyclerView.ViewHolder(view) {
+class NetworkViewHolder(private val view: View, private val retryCallback: () -> Unit) : RecyclerView.ViewHolder(view) {
 
 
     fun bind(networkState: NetworkState?) {

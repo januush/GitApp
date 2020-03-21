@@ -1,13 +1,11 @@
 package com.example.gitapp.adapter
 
 import android.content.Intent
-import android.os.Bundle
 import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gitapp.R
 import com.example.gitapp.model.Repository
@@ -37,6 +35,8 @@ class RepoViewHolder (view: View) : RecyclerView.ViewHolder(view) {
                 Toast.makeText(v?.context, itemView.repoName.getText().toString() + " clicked", Toast.LENGTH_SHORT).show()
                 val intent = Intent(v?.context,DetailActivity::class.java)
 
+                intent.putExtra("owner_name", repo?.repoImage?.login)
+                intent.putExtra("image",repo?.repoImage?.avatar_url)
                 intent.putExtra("html_url",repo?.repoLink)
                 intent.putExtra("full_name",repo?.repoFullName)
                 intent.putExtra("description",repo?.repoDescription)

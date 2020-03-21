@@ -39,7 +39,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:indeterminate="true"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:max="100"
                 android:indeterminateTint="#1a09d6"
                 app:layout_constraintEnd_toEndOf="parent"

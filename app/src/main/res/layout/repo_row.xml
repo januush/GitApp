@@ -40,12 +40,12 @@
         <ImageButton
 
                 android:id="@+id/repoDetails"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@android:drawable/ic_menu_info_details"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"/>
 
 
     </RelativeLayout>
