@@ -1,5 +1,6 @@
 package com.example.gitapp.adapter
 
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ class RepoViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     fun bind(repo: Repository?){
         itemView.repoName.text = repo?.repoName
         itemView.githublink.text = repo?.repoLink
+
+        Linkify.addLinks(itemView.githublink,Linkify.WEB_URLS)
 
         Picasso.get()
             .load(repo?.repoImage?.avatar_url)
