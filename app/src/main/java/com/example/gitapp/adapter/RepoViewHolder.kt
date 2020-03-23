@@ -55,5 +55,4 @@ class RepoViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-
 }

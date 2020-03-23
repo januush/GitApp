@@ -23,15 +23,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         reposViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
-
-
-
         reposList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = reposAdapter
         }
 
-        //reposViewModel.retry()
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
@@ -47,7 +43,5 @@ class MainActivity : AppCompatActivity() {
         reposViewModel.reposList.observe(this, Observer<PagedList<Repository>> {reposAdapter.submitList(it)
             loading_progress_bar.visibility = View.GONE
         })
-
     }
-
 }

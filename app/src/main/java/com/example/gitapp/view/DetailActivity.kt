@@ -24,6 +24,7 @@ class DetailActivity : AppCompatActivity() {
         val ownerTv: TextView = findViewById(R.id.ownerName) as TextView
 
         val image = intent.getStringExtra("image")
+
         linkTv.text = intent.getStringExtra("html_url")
         descTv.text = intent.getStringExtra("description")
         nameTv.text = intent.getStringExtra("full_name")
@@ -36,13 +37,10 @@ class DetailActivity : AppCompatActivity() {
             isprivateTv.text = "Public"
         }
 
-
         Picasso.get()
             .load(image)
             .placeholder(progressDrawable)
             .into(avatar)
         }
-
-
 
 }
