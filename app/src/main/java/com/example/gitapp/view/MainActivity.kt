@@ -16,21 +16,22 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var reposViewModel: ListViewModel
-    private lateinit var reposAdapter: ReposAdapter
+    private val reposAdapter = ReposAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         reposViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
-        reposAdapter = ReposAdapter {
-            reposViewModel.retry()
-        }
+
+
 
         reposList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = reposAdapter
         }
+
+        //reposViewModel.retry()
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false

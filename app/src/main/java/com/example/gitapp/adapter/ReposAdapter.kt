@@ -9,43 +9,24 @@ import com.example.gitapp.model.Repository
 import com.example.gitapp.util.NetworkState
 import java.lang.IllegalArgumentException
 
-class ReposAdapter(private val retryCallback: () -> Unit) : PagedListAdapter<Repository, RecyclerView.ViewHolder>(RepoDiffCallback) {
+class ReposAdapter : PagedListAdapter<Repository, RecyclerView.ViewHolder>(RepoDiffCallback) {
 
-    private var networkState: NetworkState? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            R.layout.repo_row -> RepoViewHolder.create(parent)
-            R.layout.item_network_state -> NetworkViewHolder.create(parent,retryCallback)
-            else -> throw IllegalArgumentException("unknown view type")
-        }
+
+            return RepoViewHolder.create(parent)
+
+
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (getItemViewType(position)) {
-            R.layout.repo_row -> (holder as RepoViewHolder).bind(getItem(position))
-            R.layout.item_network_state -> (holder as NetworkViewHolder).bind(networkState)
-        }
+            val repoItem = getItem(position)
+            if(repoItem!=null){
+                (holder as RepoViewHolder).bind(repoItem)
+            }
+
     }
-
-
-    override fun getItemViewType(position: Int): Int {
-        return if (hasExtraRow() && position == itemCount - 1) {
-            R.layout.item_network_state
-        } else {
-            R.layout.repo_row
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return super.getItemCount() + if (hasExtraRow()) 1 else 0
-    }
-
-
-    private fun hasExtraRow(): Boolean {
-        return networkState != null && networkState != NetworkState.LOADED
-    }
-
 
     companion object{
         val RepoDiffCallback = object : DiffUtil.ItemCallback<Repository>(){
