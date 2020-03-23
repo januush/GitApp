@@ -2,4 +2,9 @@
     <string name="app_name">GitApp</string>
     <string name="error_loading">Error while loading</string>
     <string name="retry">Retry</string>
+    <string name="type_text">Type</string>
+    <string name="repo_text">Repository name</string>
+    <string name="git_link">Github link</string>
+    <string name="owner">Owner name</string>
+    <string name="reponame">Reponame</string>
 </resources>
